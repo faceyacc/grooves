@@ -9,6 +9,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 
 const querystring = require('node:querystring');
+const { query } = require('express');
 const app = express();
 
 /**
@@ -99,6 +100,29 @@ app.get('/callback', (req, res) => {
             res.send(error);
         });
     
+});
+
+app.get('/refresh_token', (req, res) => {
+    var refresh_token = req.query.refresh_token;
+
+    axios_request_config = {
+        method: 'post',
+        url: 'https://accounts.spotify.com/api/token',
+        data: querystring.stringify({
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token,
+        }),
+        headers: {
+            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+            'content-type': 'application/x-www-form-urlencoded',
+        }
+    };
+
+    axios(axios_request_config)
+        .then()
+        .catch(error => {
+            res.send(error);
+        });
 });
 
 const port = 8888;
