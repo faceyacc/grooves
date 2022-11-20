@@ -53,7 +53,7 @@ app.get('/login', (req, res) => {
             state: state, 
             scope: scope,
         }));
-  });
+});
 
 app.get('/callback', (req, res) => {
     // Get Spotify's Authorization Code
@@ -73,33 +73,29 @@ app.get('/callback', (req, res) => {
         },
     };
 
-    // send a POST request after callback endpoint it called on.
+    // send a POST request after callback endpoint it called on
     axios(axios_request_config)
         .then(response => {
             if (response.status === 200) {
                 // Get Access token from response
-                const { access_token, token_type } = response.data;
+                const { access_token, refresh_token } = response.data;
 
-                // Get Info about user 
-                axios.get('https://api.spotify.com/v1/me', {
-                    headers: {
-                        Authorization: `${token_type} ${access_token}`
-                    }
-                })
-                    .then(response => {
-                        res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`)
-                    })
-                    .catch(error => {
-                        res.send(error);
-                    })
+                const queryParams = querystring.stringify({
+                    access_token,
+                    refresh_token
+                });
+
+                // Pass in Access and Refresh token from Spotify to React app
+                res.redirect(`http://localhost:3000/?${queryParams}`);
+
             } else {
-                res.send(response);
+                // Fail if an invalid or no token is given
+                res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
             }
         })
         .catch(error => {
             res.send(error);
         });
-    
 });
 
 app.get('/refresh_token', (req, res) => {
@@ -130,4 +126,4 @@ const port = 8888;
 // Add Router to listen on port 
 app.listen(port, () => {
     console.log(`Express app listening on http://localhost:${port}`)
-}); 
+ }); 
