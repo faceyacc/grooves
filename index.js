@@ -78,11 +78,12 @@ app.get('/callback', (req, res) => {
         .then(response => {
             if (response.status === 200) {
                 // Get Access token from response
-                const { access_token, refresh_token } = response.data;
+                const { access_token, refresh_token, expires_in } = response.data;
 
                 const queryParams = querystring.stringify({
                     access_token,
-                    refresh_token
+                    refresh_token,
+                    expires_in,
                 });
 
                 // Pass in Access and Refresh token from Spotify to React app
