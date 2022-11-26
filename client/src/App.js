@@ -1,12 +1,24 @@
 import { useState, useEffect } from 'react';
 import { accessToken, logout, getCurrentUserProfile } from './spotify';
-import './App.css';
 import { catchErrors } from './utils';
 import {BrowserRouter as Router,
         Routes,
         useLocation,
         Route
       } from "react-router-dom";
+import { GlobalStyle } from './styles';
+import styled from 'styled-components/macro';
+import { Login } from "./pages";
+
+
+const StyledLoginButton = styled.a`
+  background-color: var(--green);
+  color: var(--white);
+  padding: 10px 20px;
+  margin: 20px;
+  border-radius: 30px;
+  display: inline-block;
+`;
 
 
 // Returns home page 
@@ -30,7 +42,7 @@ function home(profile) {
 
 // Scroll to top of page when changing routes
 // https://reactrouter.com/web/guides/scroll-restoration/scroll-to-top
-function ScrollToTop() {
+function ScrollToTop() { 
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -57,11 +69,10 @@ function App() {
 
   return (
     <div className="App">
+      <GlobalStyle />
       <header className="App-header">
         {!token ? (
-          <a className="App-link" href="http://localhost:8888/login">
-            Log in to Spotify
-          </a>
+          <Login />
         ) : (
           <Router>
             <ScrollToTop />
