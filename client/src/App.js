@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { accessToken, logout, getCurrentUserProfile } from './spotify';
+import { accessToken, logout } from './spotify';
 import { catchErrors } from './utils';
 import {BrowserRouter as Router,
         Routes,
@@ -8,37 +8,25 @@ import {BrowserRouter as Router,
       } from "react-router-dom";
 import { GlobalStyle } from './styles';
 import styled from 'styled-components/macro';
-import { Login } from "./pages";
+import { Login, Profile } from "./pages";
 
 
-const StyledLoginButton = styled.a`
-  background-color: var(--green);
+const StyledLogoutButton = styled.button`
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(0,0,0,.7);
   color: var(--white);
-  padding: 10px 20px;
-  margin: 20px;
-  border-radius: 30px;
-  display: inline-block;
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  border-radius: var(--border-radius-pill);
+  z-index: 10;
+  @media (min-width: 768px) {
+    right: var(--spacing-lg);
+  }
 `;
 
-
-// Returns home page 
-function home(profile) {
-  return(
-    <>
-    <button onClick={logout}>Log Out</button>
-
-    {profile && (
-      <div>
-        <h1>{profile.display_name}</h1>
-        <p>{profile.followers.total} Followers</p>
-        {profile.images.length && profile.images[0].url && (
-          <img src={profile.images[0].url} alt="Avatar"/>
-        )}
-      </div>
-    )}
-  </>
-  )
-};
 
 // Scroll to top of page when changing routes
 // https://reactrouter.com/web/guides/scroll-restoration/scroll-to-top
@@ -53,18 +41,18 @@ function ScrollToTop() {
 
 function App() {
   const [token, setToken] = useState(null);
-  const [profile, setProfile] = useState(null);
+  
 
   useEffect(() => {
     setToken(accessToken);
 
-    const fetchData = async () => {
-      //  Pull in user data
-      const { data } = await getCurrentUserProfile();
-      setProfile(data);
-    };
+    // const fetchData = async () => {
+    //   //  Pull in user data
+    //   const { data } = await getCurrentUserProfile();
+    //   setProfile(data);
+    // };
     
-    catchErrors(fetchData());
+    // catchErrors(fetchData());
   }, []);
 
   return (
@@ -74,25 +62,23 @@ function App() {
         {!token ? (
           <Login />
         ) : (
-          <Router>
-            <ScrollToTop />
-            <Routes>
+          <>
+            <StyledLogoutButton onClick={logout}>Log Out</StyledLogoutButton>
+            <Router>
+              <ScrollToTop />
+              <Routes>
+                <Route path="/top-artists" element={<h1>Top Artist</h1>}></Route>
 
-              <Route path="/top-artists" element={<h1>Top Artist</h1>}></Route>
+                <Route path="/top-tracks" element={<h1>Top Tracks</h1>}></Route>
 
-              <Route path="/top-tracks" element={<h1>Top Tracks</h1>}></Route>
+                <Route path="/playlists/:id" element={<h1>Playlist</h1>}></Route>
 
-              <Route path="/playlists/:id" element={<h1>Playlist</h1>}></Route>
+                <Route path="/playlists/" element={<h1>Playlist</h1>}></Route>
 
-              <Route path="/playlists/" element={<h1>Playlist</h1>}></Route>
-
-              <Route path="/" element={home(profile)}>
-
-              </Route>
-            </Routes>
-
-            
-          </Router>
+                <Route path="/" element={<Profile />}></Route>
+              </Routes> 
+            </Router>
+          </>
         )}
       </header>
     </div>

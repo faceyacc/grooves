@@ -3,7 +3,7 @@ import fonts from './fonts';
 import variables from './variables';
 
 const GlobalStyle = createGlobalStyle`
-  /* ${fonts}; */
+  ${fonts};
   ${variables};
 
   html {
