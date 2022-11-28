@@ -45,14 +45,6 @@ function App() {
 
   useEffect(() => {
     setToken(accessToken);
-
-    // const fetchData = async () => {
-    //   //  Pull in user data
-    //   const { data } = await getCurrentUserProfile();
-    //   setProfile(data);
-    // };
-    
-    // catchErrors(fetchData());
   }, []);
 
   return (

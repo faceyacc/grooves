@@ -1,30 +1,39 @@
 import { useState, useEffect } from 'react';
 import { catchErrors } from '../utils';
-import { getCurrentUserProfile, getCurrentUserPlaylists, getTopArtists } from '../spotify';
+import {
+  getCurrentUserProfile,
+  getCurrentUserPlaylists,
+  getTopArtists,
+  getTopTracks
+} from '../spotify';
+import { SectionWrapper, ArtistsGrid, TrackList } from '../components';
 import { StyledHeader } from '../styles';
 
 const Profile = () => {
-    const [profile, setProfile] = useState(null);
-    const [playlists, setPlaylists] = useState(null);
-    const [topArtists, setTopArtists] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [playlists, setPlaylists] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
 
-    useEffect(() => {    
-        const fetchData = async () => {
-          //  Pull in user data from spotify API
-          const userProfile = await getCurrentUserProfile();
-          setProfile(userProfile.data);
+  useEffect(() => {
+    const fetchData = async () => {
+      const userProfile = await getCurrentUserProfile();
+      setProfile(userProfile.data);
 
-          const userPlaylist = await getCurrentUserPlaylists();
-          setPlaylists(userPlaylist.data)
+      const userPlaylists = await getCurrentUserPlaylists();
+      setPlaylists(userPlaylists.data);
 
-          const userTopArtist = await getTopArtists();
-          setTopArtists(userTopArtist)
-        };
-        
-        catchErrors(fetchData());
-      }, []);
+      const userTopArtists = await getTopArtists();
+      setTopArtists(userTopArtists.data);
 
-      console.log(topArtists);
+      const userTopTracks = await getTopTracks();
+      setTopTracks(userTopTracks.data);
+    };
+
+    catchErrors(fetchData());
+  }, []);
+
+  console.log(topTracks);
 
       
 
@@ -51,6 +60,14 @@ const Profile = () => {
                       </div>
                     </div>
                   </StyledHeader>
+
+                  {topArtists && (
+                    <main>
+                      <SectionWrapper title="Top artists this month" seeAllLink="/top-artists">
+                        <ArtistsGrid artists={topArtists.items.slice(0, 10)} />
+                      </SectionWrapper>
+                    </main>
+                  )}
               </>
             )}
         </>
