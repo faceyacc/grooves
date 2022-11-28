@@ -42,17 +42,20 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     const state = generateRandomString(16);
     res.cookie(stateKey, state)
-    const scope = 'user-read-private user-read-email';
 
-    res.redirect(
-        'https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
-            response_type: 'code',
-            client_id : CLIENT_ID,
-            redirect_uri: REDIRECT_URI,
-            state: state, 
-            scope: scope,
-        }));
+    const scope = [
+                    'user-read-private',
+                    'user-read-email',
+                    'user-top-read'].join(' ');
+
+    const queryParams = querystring.stringify({
+        client_id: CLIENT_ID,
+        response_type: 'code',
+        redirect_uri: REDIRECT_URI,
+        state: state,
+        scope: scope,
+    });
+    res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
 });
 
 app.get('/callback', (req, res) => {
