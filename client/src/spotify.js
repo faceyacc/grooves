@@ -64,7 +64,8 @@ const LOCALSTORAGE_KEYS = {
  * Clear out all localStorage items we've set and reload the page
  * @returns {void}
  */
-export const logout = () => {// Map for localStorage keys
+export const logout = () => {
+    // Map for localStorage keys
     const LOCALSTORAGE_KEYS = {
       accessToken: 'spotify_access_token',
       refreshToken: 'spotify_refresh_token',
@@ -162,6 +163,7 @@ export const getTopArtists = (time_range = 'short_term') => {
  export const getTopTracks = (time_range = 'short_term') => {
   return axios.get(`/me/top/tracks?time_range=${time_range}`);
 };
+
 
 
 
