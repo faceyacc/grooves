@@ -8,7 +8,7 @@ import {BrowserRouter as Router,
       } from "react-router-dom";
 import { GlobalStyle } from './styles';
 import styled from 'styled-components/macro';
-import { Login, Profile } from "./pages";
+import { Login, Profile, TopArtists, TopTracks } from "./pages";
 
 
 const StyledLogoutButton = styled.button`
@@ -59,9 +59,9 @@ function App() {
             <Router>
               <ScrollToTop />
               <Routes>
-                <Route path="/top-artists" element={<h1>Top Artist</h1>}></Route>
+                <Route path="/top-artists" element={<TopArtists />}></Route>
 
-                <Route path="/top-tracks" element={<h1>Top Tracks</h1>}></Route>
+                <Route path="/top-tracks" element={<TopTracks />}></Route>
 
                 <Route path="/playlists/:id" element={<h1>Playlist</h1>}></Route>
 
