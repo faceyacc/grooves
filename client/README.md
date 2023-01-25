@@ -5,7 +5,7 @@
 > App that allows you to track trends in your music taste and sort your favorite tracks by danceability, energy, and tempo. 
 
 ## Usage
-Run the following command in the root directory 
+Run the following command in the root directory:
 
 ```sh
 npm start
