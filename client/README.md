@@ -15,7 +15,7 @@ Once the app is running you can login with your Spotify account to track trends 
 
 ## Demo
 
-
+![](spotify.gif)
 
 ## Author
 
