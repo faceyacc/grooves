@@ -11,7 +11,7 @@ Run the following command in the root directory:
 npm start
 ```
 
-Once the app is running you can login with your Spotify account to track trends in your music and sort music by audio features (i.e. danceability, energy, and tempo.
+Once the app is running you can login with your Spotify account to track trends in your music and sort music by audio features (i.e. danceability, energy, and tempo).
 
 ## Demo
 
