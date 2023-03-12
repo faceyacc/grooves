@@ -90,7 +90,7 @@ app.get('/callback', (req, res) => {
                 });
 
                 // Pass in Access and Refresh token from Spotify to React app
-                res.redirect(`http://localhost:3000/?${queryParams}`);
+                res.redirect(`http://localhost:3001/?${queryParams}`);
 
             } else {
                 // Fail if an invalid or no token is given
@@ -125,7 +125,7 @@ app.get('/refresh_token', (req, res) => {
         });
 });
 
-const port = 8888;
+const port = 8889;
 
 // Add Router to listen on port 
 app.listen(port, () => {
