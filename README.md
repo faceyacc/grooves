@@ -21,9 +21,9 @@ Once the app is running you can login with your Spotify account to track trends 
 
 👤 **Ty Facey**
 
-* Website: https://ty-personal-portfolio.vercel.app/
+* Website: https://tyfacey.dev
 * Github: [@faceyacc](https://github.com/faceyacc)
-* LinkedIn: [@https:\/\/www.linkedin.com\/in\/ty-facey\/](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/ty-facey\/)
+* LinkedIn: [https:\/\/www.linkedin.com\/in\/ty-facey\/](https://www.linkedin.com/in/ty-facey/)
 
 ## Show your support
 
